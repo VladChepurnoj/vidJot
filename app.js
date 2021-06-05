@@ -21,10 +21,12 @@ const users = require("./routes/users");
 
 //passport config
 require("./config/passport")(passport);
+//db config
+const db = require("./config/database");
 
 //connect to mongoose
 mongoose
-  .connect("mongodb://localhost/vidjot-dev", {
+  .connect(db.mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -91,7 +93,7 @@ app.get("/about", (req, res) => {
 app.use("/ideas", ideas);
 app.use("/users", users);
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
